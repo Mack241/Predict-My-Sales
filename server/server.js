@@ -11,9 +11,9 @@ dotenv.config()
 const app = express()
 
 let con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root"
+    host: process.env.localhost,
+    user: process.env.user,
+    password: process.env.password
 })
 
 con.connect(e => {
