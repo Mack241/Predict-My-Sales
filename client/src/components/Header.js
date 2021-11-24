@@ -34,7 +34,7 @@ const Header = () => {
                             </button>
                         </NavList>
                         <NavList>
-                          <i class="fa-solid fa-right-from-bracket"
+                          <i className="fa-solid fa-right-from-bracket"
                             onClick={logoutHandler}
                             style={{ cursor:'pointer', marginLeft: '20px' }}></i>
                         </NavList>

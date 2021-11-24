@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import LeftCard from '../components/LeftCard';
 import RightCard from '../components/RightCard';
@@ -9,6 +10,10 @@ import SecondRightAction from '../components/SecondRightAction';
 import { Link } from 'react-router-dom';
 
 const HomeScreen = () => {
+
+    const userLogin = useSelector((state) => state.userLogin)
+    const { loading, error, userInfo } = userLogin
+    
     return (
         <Container>
           <Layout>
@@ -16,14 +21,13 @@ const HomeScreen = () => {
             <RightCard />
           </Layout>
           <Section>
-              <p>Manager Actions</p>
+              <p>{userInfo.Role}</p>
           </Section>
               <Actions>
                 <Link to='/bulkuploadpredict' style={{ textDecoration: 'none' }}>
                    <LeftAction />
                 </Link>
                  <MainAction />
-                 {/* <RightAction /> */}
               </Actions>
           <Section>
               <p>Data Analysis</p>
@@ -31,7 +35,6 @@ const HomeScreen = () => {
           <Actions>
                  <SecondLeftAction />
                  <SecondRightAction />
-                 {/* <RightAction /> */}
               </Actions>
         </Container>
     )

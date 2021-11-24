@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { login } from '../actions/userAction'
-import { useHistory } from 'react-router'
 
-const Login = ({ location, history }) => {
+const Login = ({ history }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
