@@ -3,15 +3,14 @@ import './App.css';
 import HomeScreen from './screens/HomeScreen';
 import Header from './components/Header';
 import BulkUploadPredict from './screens/BulkUploadPredict';
+import Login from './screens/Login';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/">
-            <hi>Login</hi>
-          </Route>
+          <Route exact path="/" component={Login} />
           <Route path="/home">
             <Header />
             <HomeScreen />
