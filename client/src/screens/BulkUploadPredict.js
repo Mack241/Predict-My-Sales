@@ -52,9 +52,9 @@ const onSubmit = async e => {
                    
                     <input type = "submit" value="Upload" id="upload"/>
               </form>
-              <span id="title">Upload Status <span style={{color: '#14f736', marginLeft: '10px'}}>Successful</span></span>
-              <span id="title">Upload Date <span style={{color: 'gray', marginLeft: '10px'}}>mm/dd/yyyy</span></span>
-              <span id="title">Prediction <span style={{color: '#e8d827', marginLeft: '10px'}}>Pending</span></span>
+              <span id="title">Upload Status: <span style={{color: '#14f736', marginLeft: '10px'}}>Successful</span></span>
+              <span id="title">Upload Date: <span style={{color: 'gray', marginLeft: '10px'}}>mm/dd/yyyy</span></span>
+              <span id="title">Prediction: <span style={{color: '#e8d827', marginLeft: '10px'}}>Pending</span></span>
               <Link to="">
                   <button>Predict Data</button>
               </Link>

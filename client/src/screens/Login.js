@@ -1,7 +1,26 @@
 import React, {useEffect, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { login } from '../actions/userAction'
 
 const Login = () => {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const dispatch = useDispatch()
+
+    const userLogin = useSelector((state) => state.userLogin)
+    const { loading, error, userInfo } = userLogin
+
+    useEffect(() => {
+        
+    },[])
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+        dispatch(login(username, password))
+    }
+
     return (
      <Body>
         <Container>
@@ -9,10 +28,20 @@ const Login = () => {
                 <img src="/images/logo.png" alt=""/>
             </Logo>
             <Input>
-                <input type="text" id="username" placeholder="Username" />
-                <input type="password" id="password" placeholder="Password" />
+             <form onSubmit={submitHandler}>
+                <input type="text"
+                 id="username" 
+                 placeholder="Username" 
+                 value={username} 
+                 onChange={(e) => setUsername(e.target.value)} />
+                <input type="password" 
+                 id="password" 
+                 placeholder="Password" 
+                 value={password} 
+                 onChange = {(e) => setPassword(e.target.value)}/>
+                <button>Submit</button> 
+             </form>
             </Input>
-            <button>Submit</button>
         </Container>
      </Body>
     )
@@ -20,7 +49,7 @@ const Login = () => {
 
 const Body = styled.div`
     background-image: url('/images/login-bg.png');
-    background-size: cover;
+    
     margin: 0;
 `;
 
@@ -63,7 +92,7 @@ const Container = styled.div`
 const Logo = styled.div`
     margin-top: 20px;
     img{
-        width: 200px;
+        width: 280px;
         height: 130px;
         margin-bottom: 10px;
     }
