@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv  from 'dotenv'
 import cors from 'cors'
 import fileRoute from './routes/fileRoute.js'
+import userRoute from './routes/userRoute.js'
 
 import fileUpload from 'express-fileupload'
 
@@ -15,6 +16,7 @@ app.use(fileUpload())
 
 
 app.use('/file', fileRoute)
+app.use('/login', userRoute)
 
 const PORT = process.env.PORT || 5000
 
