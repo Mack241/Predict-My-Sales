@@ -10,14 +10,14 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/" component={Login} />
-          <Route path="/home">
-            <Header />
-            <HomeScreen />
-          </Route>
+          <Route path='/login' component={Login} />
           <Route path="/bulkuploadpredict">
             <Header />
             <BulkUploadPredict />
+          </Route>
+          <Route path="/" exact>
+            <Header />
+            <HomeScreen/>
           </Route>
         </Switch>
       </Router>

@@ -1,12 +1,21 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useRef, useState } from 'react';
+import { logout } from "../actions/userAction";
 
 const Header = () => {
+    const dispatch = useDispatch()
+
+    const logoutHandler = () => {
+        dispatch(logout())
+    }
+
     return (
         <Container>
             <Content>
                 <Logo>
-                <Link to ="/home" style = {{ textDecoration: 'none' }}>
+                <Link to ="/" style = {{ textDecoration: 'none' }}>
                     <button>
                         <span style={{fontFamily: 'Trebuchet MS, sans-serif'}}>Predict My Sales</span>
                     </button>
@@ -14,7 +23,7 @@ const Header = () => {
                 </Logo>
                 <Nav>
                     <NavListWrap>
-                        <NavList>
+                        <NavList >
                             <button>
                                 <img src="/images/notification.svg" alt=""/>
                             </button>
@@ -23,6 +32,11 @@ const Header = () => {
                             <button>
                                 <img src="/images/profile.svg" alt="" />
                             </button>
+                        </NavList>
+                        <NavList>
+                          <i class="fa-solid fa-right-from-bracket"
+                            onClick={logoutHandler}
+                            style={{ cursor:'pointer', marginLeft: '20px' }}></i>
                         </NavList>
                     </NavListWrap>
                 </Nav>

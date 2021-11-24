@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { login } from '../actions/userAction'
+import { useHistory } from 'react-router'
 
-const Login = () => {
+const Login = ({ location, history }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -12,13 +13,18 @@ const Login = () => {
     const userLogin = useSelector((state) => state.userLogin)
     const { loading, error, userInfo } = userLogin
 
+    let path = '/'
+
     useEffect(() => {
-        
-    },[])
+
+    },[history, userInfo])
 
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(login(username, password))
+        if(userInfo){
+            history.push(path)
+        }
     }
 
     return (
@@ -71,7 +77,7 @@ const Container = styled.div`
     button{
         max-width: 200px;
         margin-top: 50px;
-        margin-left: 280px;
+        margin-left: 0px;
         padding: 8px;
         width: 150px;
         height: 30px;

@@ -19,9 +19,20 @@ const authUser = asyncHandler(async (req, res) => {
         con.query(insertStatement, (err, result, fields) => {
             if(err){
                 console.error(err)
+                res.status(401)
+                throw new Error('Invalid email or passowrd')
             }
-            console.log(result[0])
-            res.send()
+            // console.log(result[0])
+            res.json({
+                _id: result[0].id,
+                username: result[0].username,
+                password: result[0].password,
+                email: result[0].email,
+                Role: result[0].Role,
+                firstname: result[0].firstname,
+                lastname: result[0].lastname,
+                middlename: result[0].middlename
+            })
         })
     })
 })
