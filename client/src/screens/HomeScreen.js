@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import LeftCard from '../components/LeftCard';
@@ -11,17 +11,21 @@ import { Link } from 'react-router-dom';
 
 const HomeScreen = () => {
 
-    const userLogin = useSelector((state) => state.userLogin)
+    const userLogin =  useSelector (async(state) => await state.userLogin)
     const { loading, error, userInfo } = userLogin
+
+    useEffect(() => {
+
+    },[])
     
-    return (
+    return  (
         <Container>
           <Layout>
             <LeftCard />
             <RightCard />
           </Layout>
           <Section>
-              <p>{userInfo.Role}</p>
+              {loading && userInfo.Role ?  <p>{userInfo.Role}</p> : <div></div>}      
           </Section>
               <Actions>
                 <Link to='/bulkuploadpredict' style={{ textDecoration: 'none' }}>

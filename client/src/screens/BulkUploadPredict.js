@@ -1,42 +1,42 @@
 import styled  from "styled-components";
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
-import axios from 'axios'
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData, upload } from "../actions/userAction";
+import Loader from "../components/Loader";
+import { useEffect } from "react";
+
 
 const BulkUploadPredict = () => {
     const [file, setFile] = useState('')
     const [fileName, setFileName] = useState('Browse')
     const [uploadedFile, setUploadedFile] = useState({})
 
-const onChange = e => {
-    setFile(e.target.files[0])
-    setFileName(e.target.files[0].name)
-}
+    const dispatch = useDispatch()
 
-const onSubmit = async e => {
-    e.preventDefault();
+    const myFile = useSelector( (state) =>  state.fileUpload)
+    const { loading, error, userInfo } = myFile
 
-    const formData = new FormData();
-    formData.append('file', file)
+    const fetchedData = useSelector(async (state) => await state.fetchData)
+    const { dataLoad, dataError, dataUserInfo } = fetchedData
 
-    try{
-        const res = await axios.post('/file', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+    console.log(dataUserInfo)
 
-        const { fileName, filePath } = res.data
-
-        setUploadedFile({ fileName, filePath })
-    } catch(err) {
-        if(err.response.status === 500) {
-            console.log('Problem with server', err)
-        }else {
-            console.log(err.response.data.msg)
-        }
+    const onChange = e => {
+        setFile(e.target.files[0])
+        setFileName(e.target.files[0].name)
     }
-}
+
+    const onSubmit = async e => {
+        e.preventDefault();
+        dispatch(upload(file, setUploadedFile))
+    }
+
+    useEffect(() => {
+        if(loading === false && userInfo){
+            dispatch(fetchData())
+        }
+    },[dispatch, loading, userInfo])
 
     return (
         <Container>
@@ -52,14 +52,22 @@ const onSubmit = async e => {
                    
                     <input type = "submit" value="Upload" id="upload"/>
               </form>
-              <span id="title">Upload Status: <span style={{color: '#14f736', marginLeft: '10px'}}>Successful</span></span>
+              <span id="title">
+                  Upload Status: 
+                  {!loading && userInfo ? 
+                    <span style={{color: '#14f736', marginLeft: '10px'}}>Successful</span> :
+                    <span style={{color: '#0a66c2', marginLeft: '10px'}}>NA</span>}</span>
               <span id="title">Upload Date: <span style={{color: 'gray', marginLeft: '10px'}}>mm/dd/yyyy</span></span>
               <span id="title">Prediction: <span style={{color: '#e8d827', marginLeft: '10px'}}>Pending</span></span>
               <Link to="">
                   <button>Predict Data</button>
               </Link>
             </Section>
-            <Table></Table>
+            <Table>
+                {loading? 
+                 <Loader /> :
+                <div>Hi</div>}
+            </Table>
         </Container>
     )
 }
