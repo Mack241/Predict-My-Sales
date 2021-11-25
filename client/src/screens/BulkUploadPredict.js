@@ -2,7 +2,7 @@ import styled  from "styled-components";
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData, upload } from "../actions/userAction";
+import { deleteData, fetchData, upload } from "../actions/userAction";
 import Loader from "../components/Loader";
 import { useEffect } from "react";
 
@@ -17,10 +17,12 @@ const BulkUploadPredict = () => {
     const myFile = useSelector( (state) =>  state.fileUpload)
     const { loading, error, userInfo } = myFile
 
-    const fetchedData = useSelector(async (state) => await state.fetchData)
-    const { dataLoad, dataError, dataUserInfo } = fetchedData
+    const fetchedData = useSelector( (state) => state.fetchData)
+    const { dataLoading, dataError, data } = fetchedData
 
-    console.log(dataUserInfo)
+    if(data){
+        console.log(data[0]['ProducerNumber'])
+    }
 
     const onChange = e => {
         setFile(e.target.files[0])
@@ -30,6 +32,10 @@ const BulkUploadPredict = () => {
     const onSubmit = async e => {
         e.preventDefault();
         dispatch(upload(file, setUploadedFile))
+    }
+
+    const deleteHandler = () => {
+        dispatch(deleteData())
     }
 
     useEffect(() => {
@@ -64,9 +70,56 @@ const BulkUploadPredict = () => {
               </Link>
             </Section>
             <Table>
+                <Buttons>
+                    <i className="fas fa-edit"></i>
+                    <i className="fas fa-trash" onClick={deleteHandler}></i>
+                </Buttons>
                 {loading? 
                  <Loader /> :
-                <div>Hi</div>}
+                 <div id="table-div">
+                    <table style={{ maxWidth: '100px', marginLeft: '150px', maxHeight: '400px', overflow: 'hidden'}}>
+                        <thead>
+                                <tr>
+                                    <td>ProducerNumber</td>
+                                    <td>PremiumYear</td>
+                                    <td>ProductType</td>
+                                    <td>ProducerPriorExperienceYears</td>
+                                    <td>ProducerEducation</td>
+                                    <td>ProducerLOSMonths</td>
+                                    <td>ProducerAgeYears</td>
+                                    <td>ProducerRace</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                    <td>ProducerNumber</td>
+                                </tr>
+                        </thead>
+                        <tbody>
+                            {data ? 
+                             data.map((d) => {
+                                <tr>
+                                    <td>{d}</td>
+                                </tr>
+                             }) :
+                             <td>Hi</td>
+                             }
+                        </tbody>
+                    </table>
+                </div>
+                }
             </Table>
         </Container>
     )
@@ -188,6 +241,32 @@ const Section = styled.section`
 const Table = styled(Section)`
     margin-top: 50px;
     height: 350px;
+    justify-content: unset;
+    flex-direction: column;
+
+    #table-head {
+        padding: 50px;
+    }
+
+    #table-div{
+        margin-top: 20px;
+        max-width: 1200px;
+        margin-left: 50px;
+        overflow: hidden;
+    }
+`;
+
+const Buttons = styled.div`
+    margin-left: 1090px;
+
+    i{
+        margin-right: 20px;
+        cursor: pointer;
+
+        &:hover {
+            color: #0a66c2;
+        }
+    }
 `;
 
 export default BulkUploadPredict

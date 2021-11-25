@@ -7,7 +7,10 @@ import { USER_LOGIN_REQUEST,
          USER_FILE_UPLOAD_FAIL,
          USER_FETCH_DATA_REQUEST,
          USER_FETCH_DATA_SUCCESS,
-         USER_FETCH_DATA_FAIL} from "../constants/userConstants";
+         USER_FETCH_DATA_FAIL,
+         USER_DELETE_DATA_REQUEST,
+         USER_DELETE_DATA_SUCCESS,
+         USER_DELETE_DATA_FAIL} from "../constants/userConstants";
 import axios from "axios";
 
 export const login = (username, password) => async (dispatch) => {
@@ -86,7 +89,8 @@ export const fetchData = () => async (dispatch) => {
             type: USER_FETCH_DATA_REQUEST
         })
 
-        const data  = await axios.get('/fetch')
+        const resData  = await axios.get('/fetch')
+        const { data } = resData
 
         dispatch({
             type: USER_FETCH_DATA_SUCCESS,
@@ -97,6 +101,29 @@ export const fetchData = () => async (dispatch) => {
 
         dispatch({
             type: USER_FETCH_DATA_FAIL,
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+        })
+    }
+}
+
+export const deleteData = () => (dispatch) => {
+    try{
+
+        dispatch({
+            type: USER_DELETE_DATA_REQUEST
+        })
+
+        const response = axios.get('/fetch/delete')
+
+        dispatch({
+            type: USER_DELETE_DATA_SUCCESS,
+            payload: response
+        })
+
+    } catch(error) {
+
+        dispatch({
+            type: USER_DELETE_DATA_FAIL,
             payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }

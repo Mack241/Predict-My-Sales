@@ -15,14 +15,38 @@ const fetchData = asyncHandler(async (req, res) => {
 
         let query = 'SELECT * FROM DATA'
 
+         con.query(query, (err, result, fields) => {
+            if(err) {
+                res.status(401)
+                console.error(err)
+            }
+            // console.log(result[0])
+            res.json(result)
+        })
+    })
+})
+
+const deleteData = asyncHandler(async (req, res) => {
+
+    let con = mysql.createConnection({
+        host: process.env.localhost,
+        user: process.env.user,
+        password: process.env.password,
+        database: process.env.database
+    })
+
+    con.connect((e) => {
+        if(e) throw e
+
+        let query = 'DELETE FROM DATA'
         con.query(query, (err, result, fields) => {
             if(err) {
                 res.status(401)
                 console.error(err)
             }
-            res.send(result)
+            res.json({ result })
         })
     })
 })
 
-export { fetchData }
+export { fetchData, deleteData }

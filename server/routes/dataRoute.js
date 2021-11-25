@@ -1,8 +1,9 @@
 import express from 'express'
-import { fetchData } from '../controller/dataController.js'
+import { deleteData, fetchData } from '../controller/dataController.js'
 
 const router = express.Router()
 
 router.get('/', fetchData)
+router.get('/delete', deleteData)
 
 export default router

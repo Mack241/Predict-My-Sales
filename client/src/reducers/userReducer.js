@@ -8,7 +8,10 @@ import {
     USER_FILE_UPLOAD_FAIL,
     USER_FETCH_DATA_REQUEST,
     USER_FETCH_DATA_SUCCESS,
-    USER_FETCH_DATA_FAIL} from "../constants/userConstants";
+    USER_FETCH_DATA_FAIL,
+    USER_DELETE_DATA_REQUEST,
+    USER_DELETE_DATA_SUCCESS,
+    USER_DELETE_DATA_FAIL} from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
     switch(action.type){
@@ -41,11 +44,24 @@ export const fileUplaodReducer = (state = {}, action) => {
 export const fetchDataReducer = (state = {}, action) => {
     switch(action.type){
         case USER_FETCH_DATA_REQUEST:
-            return { loading: true }
+            return { dataLoading: true }
         case USER_FETCH_DATA_SUCCESS:
-            return { loading: false, userInfo: action.payload }
+            return { dataLoading: false, data: action.payload }
         case USER_FETCH_DATA_FAIL:
-            return { loading: false, error: action.payload }
+            return { dataLoading: false, dataError: action.payload }
+        default:
+            return state
+    }
+}
+
+export const deleteDataReducer = (state = {}, action) => {
+    switch(action.type) {
+        case USER_DELETE_DATA_REQUEST:
+            return { deleteDataLoad: true }
+        case USER_DELETE_DATA_SUCCESS:
+            return { deleteDataLoad: false, deleteRes: action.payload }
+        case USER_DELETE_DATA_FAIL:
+            return { deleteDataLoad: false, deleteError: action.payload }
         default:
             return state
     }
