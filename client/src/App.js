@@ -4,6 +4,7 @@ import HomeScreen from './screens/HomeScreen';
 import Header from './components/Header';
 import BulkUploadPredict from './screens/BulkUploadPredict';
 import Login from './screens/Login';
+import  GeneralAnalysisScreen  from './screens/GeneralAnalysisScreen';
 
 function App() {
   return (
@@ -14,6 +15,10 @@ function App() {
           <Route path="/bulkuploadpredict">
             <Header />
             <BulkUploadPredict />
+          </Route>
+          <Route path="/general_analysis">
+            <Header />
+            <GeneralAnalysisScreen />
           </Route>
           <Route path="/" exact>
             <Header />

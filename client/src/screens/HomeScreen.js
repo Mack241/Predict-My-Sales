@@ -27,6 +27,9 @@ const HomeScreen = () => {
           <Section>
               {loading && userInfo.Role ?  <p>{userInfo.Role}</p> : <div></div>}      
           </Section>
+          <Section>
+              <p>Manager Actions</p>
+          </Section>
               <Actions>
                 <Link to='/bulkuploadpredict' style={{ textDecoration: 'none' }}>
                    <LeftAction />
@@ -37,7 +40,9 @@ const HomeScreen = () => {
               <p>Data Analysis</p>
           </Section>
           <Actions>
+            <Link to='/general_analysis' style={{ textDecoration: 'none' }}>
                  <SecondLeftAction />
+            </Link>
                  <SecondRightAction />
               </Actions>
         </Container>

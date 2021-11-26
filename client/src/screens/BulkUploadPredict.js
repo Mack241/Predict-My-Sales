@@ -11,6 +11,7 @@ const BulkUploadPredict = () => {
     const [file, setFile] = useState('')
     const [fileName, setFileName] = useState('Browse')
     const [uploadedFile, setUploadedFile] = useState({})
+    const [getData, setGetData] = useState([]) 
 
     const dispatch = useDispatch()
 
@@ -19,10 +20,6 @@ const BulkUploadPredict = () => {
 
     const fetchedData = useSelector( (state) => state.fetchData)
     const { dataLoading, dataError, data } = fetchedData
-
-    if(data){
-        console.log(data[0]['ProducerNumber'])
-    }
 
     const onChange = e => {
         setFile(e.target.files[0])
@@ -36,13 +33,19 @@ const BulkUploadPredict = () => {
 
     const deleteHandler = () => {
         dispatch(deleteData())
+        setFileName('Browse')
+        userInfo.fileName = ''
     }
 
-    useEffect(() => {
+    const fetchDataHandler = () => {
         if(loading === false && userInfo){
             dispatch(fetchData())
         }
-    },[dispatch, loading, userInfo])
+    }
+
+    useEffect(() => {
+       fetchDataHandler()
+    },[])
 
     return (
         <Container>
@@ -60,7 +63,7 @@ const BulkUploadPredict = () => {
               </form>
               <span id="title">
                   Upload Status: 
-                  {!loading && userInfo ? 
+                  {!loading && userInfo && userInfo.fileName !== '' ? 
                     <span style={{color: '#14f736', marginLeft: '10px'}}>Successful</span> :
                     <span style={{color: '#0a66c2', marginLeft: '10px'}}>NA</span>}</span>
               <span id="title">Upload Date: <span style={{color: 'gray', marginLeft: '10px'}}>mm/dd/yyyy</span></span>
@@ -70,54 +73,17 @@ const BulkUploadPredict = () => {
               </Link>
             </Section>
             <Table>
-                <Buttons>
-                    <i className="fas fa-edit"></i>
-                    <i className="fas fa-trash" onClick={deleteHandler}></i>
-                </Buttons>
-                {loading? 
+                { userInfo ? 
+                 <Buttons>
+                 <i className="fas fa-edit"></i>
+                 <i className="fas fa-trash" onClick={deleteHandler}></i>
+                </Buttons> :
+                 <div></div> 
+                 }
+                {dataLoading ? 
                  <Loader /> :
                  <div id="table-div">
-                    <table style={{ maxWidth: '100px', marginLeft: '150px', maxHeight: '400px', overflow: 'hidden'}}>
-                        <thead>
-                                <tr>
-                                    <td>ProducerNumber</td>
-                                    <td>PremiumYear</td>
-                                    <td>ProductType</td>
-                                    <td>ProducerPriorExperienceYears</td>
-                                    <td>ProducerEducation</td>
-                                    <td>ProducerLOSMonths</td>
-                                    <td>ProducerAgeYears</td>
-                                    <td>ProducerRace</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                    <td>ProducerNumber</td>
-                                </tr>
-                        </thead>
-                        <tbody>
-                            {data ? 
-                             data.map((d) => {
-                                <tr>
-                                    <td>{d}</td>
-                                </tr>
-                             }) :
-                             <td>Hi</td>
-                             }
-                        </tbody>
-                    </table>
+                   
                 </div>
                 }
             </Table>

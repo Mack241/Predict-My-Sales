@@ -11,7 +11,6 @@ const RightCard = () => {
                         <span id="title">Model last trained on  <span id="text">mm/dd/yyy</span></span>
                     </div>
                     <div>
-                    <button>Train Data</button>
                     <button>View Data</button>
                 </div>
             </CardBody>
@@ -70,7 +69,7 @@ const CardBody = styled.div`
     button {
         cursor: pointer;
         /* border: none; */
-        border-style: none;
+        border: 1px solid #0a66c2;
         background: transparent;
         background-color: #fff;
         margin-right: 20px;
