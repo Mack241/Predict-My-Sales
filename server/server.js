@@ -4,6 +4,7 @@ import cors from 'cors'
 import fileRoute from './routes/fileRoute.js'
 import userRoute from './routes/userRoute.js'
 import dataRoute from './routes/dataRoute.js'
+import chartRoute from './routes/chartRoute.js'
 
 import fileUpload from 'express-fileupload'
 
@@ -19,6 +20,7 @@ app.use(fileUpload())
 app.use('/file', fileRoute)
 app.use('/login', userRoute)
 app.use('/fetch', dataRoute)
+app.use('/charts/fetch', chartRoute)
 
 const PORT = process.env.PORT || 5000
 

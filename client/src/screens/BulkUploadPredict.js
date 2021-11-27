@@ -38,14 +38,14 @@ const BulkUploadPredict = () => {
     }
 
     const fetchDataHandler = () => {
-        if(loading === false && userInfo){
             dispatch(fetchData())
-        }
     }
 
     useEffect(() => {
-       fetchDataHandler()
-    },[])
+       if(userInfo) {
+           fetchDataHandler()
+       }
+    },[loading, userInfo])
 
     return (
         <Container>

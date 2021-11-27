@@ -2,12 +2,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { userLoginReducer, fileUplaodReducer, fetchDataReducer, deleteDataReducer } from './reducers/userReducer'
+import { getChartDataReducer } from './reducers/chartReducer'
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     fileUpload: fileUplaodReducer,
     fetchData: fetchDataReducer,
-    deleteData: deleteDataReducer
+    deleteData: deleteDataReducer,
+    chartData: getChartDataReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') 

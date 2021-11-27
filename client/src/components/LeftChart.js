@@ -1,68 +1,36 @@
 import styled from "styled-components";
-import { Pie, defaults } from 'react-chartjs-2'
 import React from 'react'
-
-defaults.global.tooltips.enabled = false
-defaults.global.legend.position = 'bottom'
-
+import { useDispatch, useSelector } from "react-redux";
+import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Bar } from 'recharts'
+import { useEffect } from "react";
+import { getData } from "../actions/chartAction";
 
 const LeftChart = () => {
+
+  const dispatch = useDispatch()
+
+  const chartFetchData = useSelector((state) => state.chartData)
+  const { chartData } = chartFetchData
+
+  console.log(chartData)
+
+  useEffect(() => {
+    dispatch(getData())
+  }, [dispatch]) 
+
     return (
         <div>
-      <Pie
-        data={{
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [
-            {
-              label: '# of votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-              ],
-              borderWidth: 1,
-            },
-            // {
-            //   label: 'Quantity',
-            //   data: [47, 52, 67, 58, 9, 50],
-            //   backgroundColor: 'orange',
-            //   borderColor: 'red',
-            // },
-          ],
-        }}
-        height={400}
-        width={600}
-        options={{
-          maintainAspectRatio: false,
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                },
-              },
-            ],
-          },
-          legend: {
-            labels: {
-              fontSize: 25,
-            },
-          },
-        }}
-      />
-    </div>
+          <CardBody>
+            <BarChart width={550} height={350} data={chartData}>
+              <CartesianGrid strokeDasharray="3 3"/>
+              <XAxis dataKey="name"/>
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="pv" fill="#8884d8" />
+              <Bar dataKey="uv" fill="#82ca9d" />
+            </BarChart>
+          </CardBody>
+        </div>
     )
 }
 
@@ -87,5 +55,30 @@ const Container = styled.div`
     transition: all .7s;
     
 `;
+
+const CardBody = styled.div`
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 8px;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: box-shadow 83ms;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 10px 10px 5px -4px rgba(174,206,229,0.75);
+    -webkit-box-shadow: 10px 10px 5px -4px rgba(174,206,229,0.75);
+    -moz-box-shadow: 10px 10px 5px -4px rgba(174,206,229,0.75);
+    height: 360px;
+    width: 550px;
+    cursor: pointer;
+    
+`;
+
 
 export default LeftChart
