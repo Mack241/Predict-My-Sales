@@ -1,10 +1,47 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { getData } from '../actions/chartAction'
+import { PieChart, Pie, Tooltip } from 'recharts'
 
 const RightChart = () => {
+    const dispatch = useDispatch()
+
+    const chartFetchData = useSelector((state) => state.chartData)
+    const { chartData } = chartFetchData
+
+    let values = []
+
+        if(chartData) {
+            chartData.map((d) => {
+               values.push({"name": 'CommissionAmount', "value": d['AVG(CommissionAmount)']})
+               values.push({"name": 'WrittenPremium', "value": d['AVG(WrittenPremium)']})
+               values.push({"name": 'PolicyAnnualFee', "value": d['AVG(PolicyAnnualFee)']})
+               values.push({"name": 'PerformanceCredit', "value": d['AVG(PerformanceCredit)']})
+            })
+        }
+       
+    useEffect(() => {
+        dispatch(getData())
+    }, [dispatch]) 
+
     return (
         <Container>
             <CardBody>
-              
+               <PieChart width={550} height={300}>
+                  <Pie 
+                    dataKey="value"
+                    isAnimationActive={true}
+                    data={values}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={110}
+                    fill="#8884d8"
+                    label
+                  />
+                  <Tooltip />
+               </PieChart> 
+               {/* {/* {Object.values(chartData)} */}
             </CardBody>
         </Container>
     )

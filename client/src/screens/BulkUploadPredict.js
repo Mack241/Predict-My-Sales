@@ -21,6 +21,8 @@ const BulkUploadPredict = () => {
     const fetchedData = useSelector( (state) => state.fetchData)
     const { dataLoading, dataError, data } = fetchedData
 
+    // console.log(data)
+
     const onChange = e => {
         setFile(e.target.files[0])
         setFileName(e.target.files[0].name)
@@ -35,6 +37,7 @@ const BulkUploadPredict = () => {
         dispatch(deleteData())
         setFileName('Browse')
         userInfo.fileName = ''
+        
     }
 
     const fetchDataHandler = () => {
@@ -83,7 +86,43 @@ const BulkUploadPredict = () => {
                 {dataLoading ? 
                  <Loader /> :
                  <div id="table-div">
-                   
+                   <table>
+                       <thead>
+                         {data === undefined ? 
+                           <tr></tr> 
+                           :
+                            <tr>
+                                <td>WrittenPremium</td>
+                                <td>PolicyAnnualFee</td>
+                                <td>CommissionAmount</td>
+                                <td>PerformanceCredit</td> 
+                            </tr>  
+                          }
+                       </thead>
+                       <tbody>
+                            {  data === undefined ?
+                             <tr>
+                                <td>No Data</td>
+                            </tr> :
+                              data.map((d) => (
+                                    <tr>
+                                        <td key={Math.random() * (10-1) + 1}>
+                                           {d.WrittenPremium}
+                                        </td>
+                                        <td key={Math.random() * (10-1) + 1}>
+                                           {d.PolicyAnnualFee}
+                                        </td>
+                                        <td key={Math.random() * (10-1) + 1}>
+                                           {d.CommissionAmount}
+                                        </td>
+                                        <td key={Math.random() * (10-1) + 1}>
+                                           {d.PerformanceCredit}
+                                        </td>
+                                    </tr>
+                              ))
+                            }
+                       </tbody>
+                   </table>
                 </div>
                 }
             </Table>

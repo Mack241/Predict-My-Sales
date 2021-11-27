@@ -13,7 +13,7 @@ const getChartData = asyncHandler (async (req, res) => {
     con.connect((e) => {
         if(e) throw e
 
-        let query = 'SELECT WrittenPremium, PolicyAnnualFee, CommissionAmount, PerformanceCredit FROM DATA'
+        let query = 'SELECT AVG(WrittenPremium), AVG(PolicyAnnualFee), AVG(CommissionAmount), AVG(PerformanceCredit), CommissionablePremium FROM DATA'
 
         con.query(query, (err, result, fields) => {
             if(err) {

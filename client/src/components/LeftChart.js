@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Bar } from 'recharts'
 import { useEffect } from "react";
 import { getData } from "../actions/chartAction";
+import Loader from "./Loader";
 
 const LeftChart = () => {
 
@@ -12,7 +13,7 @@ const LeftChart = () => {
   const chartFetchData = useSelector((state) => state.chartData)
   const { chartData } = chartFetchData
 
-  console.log(chartData)
+  // console.log(chartData)
 
   useEffect(() => {
     dispatch(getData())
@@ -21,40 +22,21 @@ const LeftChart = () => {
     return (
         <div>
           <CardBody>
-            <BarChart width={550} height={350} data={chartData}>
-              <CartesianGrid strokeDasharray="3 3"/>
-              <XAxis dataKey="name"/>
-              <YAxis />
+              <BarChart width={550} height={350} data={chartData}>
+              <CartesianGrid strokeDasharray="2 2"/>
+              <XAxis />
+              <YAxis  dataKey="CommissionablePremium"  />
               <Tooltip />
-              <Bar dataKey="pv" fill="#8884d8" />
-              <Bar dataKey="uv" fill="#82ca9d" />
-            </BarChart>
+              <Bar dataKey="AVG(WrittenPremium)" fill="#ad4703" />
+              <Bar dataKey="AVG(PerformanceCredit)" fill="#ad4703" />
+              <Bar dataKey="AVG(PolicyAnnualFee)" fill="#ad4703" />
+              <Bar dataKey="AVG(CommissionAmount)" fill="#ad4703" />
+            </BarChart> 
           </CardBody>
         </div>
     )
 }
 
-const Container = styled.div`
-    grid-area: leftside;
-    
-    border: none;
-    background: transparent;
-    background-color: #fff;
-    position: relative;
-    cursor: pointer;
-    box-shadow: 10px 10px 5px -4px rgba(174,206,229,0.75);
-    -webkit-box-shadow: 10px 10px 5px -4px rgba(174,206,229,0.75);
-    -moz-box-shadow: 10px 10px 5px -4px rgba(174,206,229,0.75);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    height: 360px;
-    left: 0;
-    border-radius: 5px;
-    transition: all .7s;
-    
-`;
 
 const CardBody = styled.div`
     text-align: center;
