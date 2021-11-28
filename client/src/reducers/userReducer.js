@@ -54,12 +54,12 @@ export const fetchDataReducer = (state = {}, action) => {
     }
 }
 
-export const deleteDataReducer = (state = {}, action) => {
+export const deleteDataReducer = (state = { data: [] }, action) => {
     switch(action.type) {
         case USER_DELETE_DATA_REQUEST:
             return { deleteDataLoad: true }
         case USER_DELETE_DATA_SUCCESS:
-            return { deleteDataLoad: false, deleteRes: action.payload }
+            return { deleteDataLoad: false, data: state.data.pop() }
         case USER_DELETE_DATA_FAIL:
             return { deleteDataLoad: false, deleteError: action.payload }
         default:

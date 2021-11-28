@@ -11,7 +11,6 @@ const BulkUploadPredict = () => {
     const [file, setFile] = useState('')
     const [fileName, setFileName] = useState('Browse')
     const [uploadedFile, setUploadedFile] = useState({})
-    const [getData, setGetData] = useState([]) 
 
     const dispatch = useDispatch()
 
@@ -40,15 +39,15 @@ const BulkUploadPredict = () => {
         
     }
 
-    const fetchDataHandler = () => {
-            dispatch(fetchData())
-    }
+    // const fetchDataHandler = () => {
+    //         dispatch(fetchData())
+    // }
 
     useEffect(() => {
        if(userInfo) {
-           fetchDataHandler()
+           dispatch(fetchData())
        }
-    },[loading, userInfo])
+    },[userInfo, dispatch, fetchData])
 
     return (
         <Container>
@@ -86,36 +85,34 @@ const BulkUploadPredict = () => {
                 {dataLoading ? 
                  <Loader /> :
                  <div id="table-div">
-                   <table>
+                   <table id="table">
                        <thead>
                          {data === undefined ? 
                            <tr></tr> 
                            :
                             <tr>
-                                <td>WrittenPremium</td>
-                                <td>PolicyAnnualFee</td>
-                                <td>CommissionAmount</td>
-                                <td>PerformanceCredit</td> 
+                                <td id="table-head">WrittenPremium</td>
+                                <td id="table-head">PolicyAnnualFee</td>
+                                <td id="table-head">CommissionAmount</td>
+                                <td id="table-head">PerformanceCredit</td> 
                             </tr>  
                           }
                        </thead>
                        <tbody>
                             {  data === undefined ?
-                             <tr>
-                                <td>No Data</td>
-                            </tr> :
+                             <div id="no-data">No Data</div> :
                               data.map((d) => (
-                                    <tr>
-                                        <td key={Math.random() * (10-1) + 1}>
+                                    <tr id="table-row">
+                                        <td id="table-data" key={Math.random() * (10-1) + 1}>
                                            {d.WrittenPremium}
                                         </td>
-                                        <td key={Math.random() * (10-1) + 1}>
+                                        <td id="table-data" key={Math.random() * (10-1) + 1}>
                                            {d.PolicyAnnualFee}
                                         </td>
-                                        <td key={Math.random() * (10-1) + 1}>
+                                        <td id="table-data" key={Math.random() * (10-1) + 1}>
                                            {d.CommissionAmount}
                                         </td>
-                                        <td key={Math.random() * (10-1) + 1}>
+                                        <td id="table-data" key={Math.random() * (10-1) + 1}>
                                            {d.PerformanceCredit}
                                         </td>
                                     </tr>
@@ -249,15 +246,48 @@ const Table = styled(Section)`
     justify-content: unset;
     flex-direction: column;
 
-    #table-head {
-        padding: 50px;
+    #table{
+        border-collapse: separate;
+        border-spacing: 0 1em;
+        margin-bottom: 20px;
     }
 
+    #no-data {
+        margin-left: 250px;
+        margin-top: 50px;
+        font-weight: 600;
+        color: #0a66c2;
+    }
+    
     #table-div{
         margin-top: 20px;
         max-width: 1200px;
-        margin-left: 50px;
+        margin-left: 300px;
+        overflow-y: scroll;
+        font-weight: 500;
+
+        tr:nth-child(even) {
+            background-color: #cae3e8;
+        }
+
+    }
+    
+    #table-head {
+        padding-left: 30px;
         overflow: hidden;
+        z-index: 1;
+        color: #0a66c2;
+        font-weight: 600;
+    }
+
+    /* #table-row{
+        border-colla
+    } */
+
+    #table-data{
+        /* padding-left: 30px; */
+        text-align: center;
+        padding: 12px;
     }
 `;
 
