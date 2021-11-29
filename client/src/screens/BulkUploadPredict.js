@@ -2,7 +2,7 @@ import styled  from "styled-components";
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { deleteData, fetchData, upload } from "../actions/userAction";
+import { deleteData, fetchData, upload } from "../actions/bulkUploadActions";
 import Loader from "../components/Loader";
 import { useEffect } from "react";
 
@@ -14,13 +14,10 @@ const BulkUploadPredict = () => {
 
     const dispatch = useDispatch()
 
-    const myFile = useSelector( (state) =>  state.fileUpload)
-    const { loading, error, userInfo } = myFile
+    const bulkData = useSelector( (state) =>  state.bulkData)
+    const { loading, data, prediction, uploadStat } = bulkData
 
-    const fetchedData = useSelector( (state) => state.fetchData)
-    const { dataLoading, dataError, data } = fetchedData
-
-    // console.log(data)
+    console.log(uploadStat)
 
     const onChange = e => {
         setFile(e.target.files[0])
@@ -30,21 +27,18 @@ const BulkUploadPredict = () => {
     const onSubmit = async e => {
         e.preventDefault();
         dispatch(upload(file, setUploadedFile))
+        dispatch(fetchData())
     }
 
     const deleteHandler = () => {
         dispatch(deleteData())
-        setFileName('Browse')
-        
+        setFileName('Browse')  
     }
 
-    // const fetchDataHandler = () => {
-    //         dispatch(fetchData())
-    // }
-
     useEffect(() => {
-           dispatch(fetchData())
-    },[ dispatch, fetchData])
+        console.log('useEffect')
+        dispatch(fetchData())
+    },[])
 
     return (
         <Container>
@@ -55,48 +49,51 @@ const BulkUploadPredict = () => {
                     <input type= "file" id="customFile" style={{ display: 'none' }} onChange={onChange}/>
                     <div id="file-label">
                         <label htmlFor="customFile" id="label">{fileName.substring(0,6)}</label>
-                        <i className="fa fa-upload" ></i>
+                        <i className="fas fa-cloud-upload-alt"></i>
                     </div>
                    
                     <input type = "submit" value="Upload" id="upload"/>
               </form>
               <span id="title">
                   Upload Status: 
-                  {!loading && userInfo && userInfo.fileName !== '' ? 
+                  { data && data.length != 0  ? 
                     <span style={{color: '#14f736', marginLeft: '10px'}}>Successful</span> :
-                    <span style={{color: '#0a66c2', marginLeft: '10px'}}>NA</span>}</span>
+                    <span style={{color: '#0a66c2', marginLeft: '10px'}}>NA</span> }</span>
               <span id="title">Upload Date: <span style={{color: 'gray', marginLeft: '10px'}}>mm/dd/yyyy</span></span>
+              {
+                  prediction 
+              }
               <span id="title">Prediction: <span style={{color: '#e8d827', marginLeft: '10px'}}>Pending</span></span>
               <Link to="/predict_data">
                   <button>Predict Data</button>
               </Link>
             </Section>
             <Table>
-                { data ? 
+                {  data && data.length != 0 ? 
                  <Buttons>
                  <i className="fas fa-edit"></i>
                  <i className="fas fa-trash" onClick={deleteHandler}></i>
                 </Buttons> :
                  <div></div> 
                  }
-                {dataLoading ? 
+                {loading ? 
                  <Loader /> :
                  <div id="table-div">
                    <table id="table">
                        <thead>
-                         {data === undefined ? 
-                           <tr></tr> 
-                           :
+                         {data && data.length != 0 ? 
                             <tr>
                                 <td id="table-head">WrittenPremium</td>
                                 <td id="table-head">PolicyAnnualFee</td>
                                 <td id="table-head">CommissionAmount</td>
                                 <td id="table-head">PerformanceCredit</td> 
                             </tr>  
+                           :
+                           <tr></tr> 
                           }
                        </thead>
                        <tbody>
-                            {  data === undefined ?
+                            { data && data.length === 0 ?
                              <div id="no-data">No Data</div> :
                               data.map((d) => (
                                     <tr id="table-row">
