@@ -35,7 +35,6 @@ const BulkUploadPredict = () => {
     const deleteHandler = () => {
         dispatch(deleteData())
         setFileName('Browse')
-        userInfo.fileName = ''
         
     }
 
@@ -44,10 +43,8 @@ const BulkUploadPredict = () => {
     // }
 
     useEffect(() => {
-       if(userInfo) {
            dispatch(fetchData())
-       }
-    },[userInfo, dispatch, fetchData])
+    },[ dispatch, fetchData])
 
     return (
         <Container>
@@ -70,12 +67,12 @@ const BulkUploadPredict = () => {
                     <span style={{color: '#0a66c2', marginLeft: '10px'}}>NA</span>}</span>
               <span id="title">Upload Date: <span style={{color: 'gray', marginLeft: '10px'}}>mm/dd/yyyy</span></span>
               <span id="title">Prediction: <span style={{color: '#e8d827', marginLeft: '10px'}}>Pending</span></span>
-              <Link to="">
+              <Link to="/predict_data">
                   <button>Predict Data</button>
               </Link>
             </Section>
             <Table>
-                { userInfo ? 
+                { data ? 
                  <Buttons>
                  <i className="fas fa-edit"></i>
                  <i className="fas fa-trash" onClick={deleteHandler}></i>
