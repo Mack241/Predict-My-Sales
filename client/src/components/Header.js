@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useRef, useState } from 'react';
 import { logout } from "../actions/userAction";
 
 const Header = () => {

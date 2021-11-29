@@ -12,10 +12,10 @@ import { USER_DELETE_DATA_FAIL,
 
 export const upload = (file, setUploadedFile) => async (dispatch) => {
 
-    const formData = new FormData();
-    formData.append('file', file)
-
+    
     try{
+        const formData = new FormData();
+        formData.append('file', file)
 
         dispatch({
             type: USER_FILE_UPLOAD_REQUEST
@@ -42,7 +42,7 @@ export const upload = (file, setUploadedFile) => async (dispatch) => {
             type: USER_FILE_UPLOAD_FAIL,
             payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
-
+        console.log(error)
     }
 
 }

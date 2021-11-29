@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 const HomeScreen = () => {
 
     const userLogin =  useSelector (async(state) => await state.userLogin)
-    const { loading, error, userInfo } = userLogin
+    const { loading, userInfo } = userLogin
 
     useEffect(() => {
 

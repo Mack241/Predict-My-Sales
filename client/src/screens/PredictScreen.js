@@ -2,9 +2,6 @@ import styled from 'styled-components'
 
 const PredictScreen = () => {
 
-    const d = new Date()
-    let currDate = d.getFullYear()
-
     return (
         <Container>
                <p>Bulk Upload Data and Predict
@@ -206,19 +203,6 @@ const Table = styled(Section)`
         /* padding-left: 30px; */
         text-align: center;
         padding: 12px;
-    }
-`;
-
-const Buttons = styled.div`
-    margin-left: 1090px;
-
-    i{
-        margin-right: 20px;
-        cursor: pointer;
-
-        &:hover {
-            color: #0a66c2;
-        }
     }
 `;
 

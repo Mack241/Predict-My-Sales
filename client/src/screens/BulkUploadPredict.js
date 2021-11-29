@@ -17,18 +17,18 @@ const BulkUploadPredict = () => {
     const bulkData = useSelector( (state) =>  state.bulkData)
     const { loading, data, prediction, uploadStat } = bulkData
 
-    console.log(uploadStat)
-
     const onChange = e => {
         setFile(e.target.files[0])
         setFileName(e.target.files[0].name)
     }
 
-    const onSubmit = async e => {
+    const onSubmit =  e => {
         e.preventDefault();
         dispatch(upload(file, setUploadedFile))
-        dispatch(fetchData())
     }
+    if(uploadStat === true){
+        dispatch(fetchData())
+   }
 
     const deleteHandler = () => {
         dispatch(deleteData())
@@ -36,9 +36,8 @@ const BulkUploadPredict = () => {
     }
 
     useEffect(() => {
-        console.log('useEffect')
         dispatch(fetchData())
-    },[])
+    },[dispatch])
 
     return (
         <Container>
@@ -56,7 +55,7 @@ const BulkUploadPredict = () => {
               </form>
               <span id="title">
                   Upload Status: 
-                  { data && data.length != 0  ? 
+                  { data && data.length !== 0  ? 
                     <span style={{color: '#14f736', marginLeft: '10px'}}>Successful</span> :
                     <span style={{color: '#0a66c2', marginLeft: '10px'}}>NA</span> }</span>
               <span id="title">Upload Date: <span style={{color: 'gray', marginLeft: '10px'}}>mm/dd/yyyy</span></span>
@@ -69,7 +68,7 @@ const BulkUploadPredict = () => {
               </Link>
             </Section>
             <Table>
-                {  data && data.length != 0 ? 
+                {  data && data.length !== 0 ? 
                  <Buttons>
                  <i className="fas fa-edit"></i>
                  <i className="fas fa-trash" onClick={deleteHandler}></i>
@@ -81,7 +80,7 @@ const BulkUploadPredict = () => {
                  <div id="table-div">
                    <table id="table">
                        <thead>
-                         {data && data.length != 0 ? 
+                         {data && data.length !== 0 ? 
                             <tr>
                                 <td id="table-head">WrittenPremium</td>
                                 <td id="table-head">PolicyAnnualFee</td>
@@ -93,10 +92,10 @@ const BulkUploadPredict = () => {
                           }
                        </thead>
                        <tbody>
-                            { data && data.length === 0 ?
+                            { data && data.length === 0 && uploadStat === false ?
                              <div id="no-data">No Data</div> :
-                              data.map((d) => (
-                                    <tr id="table-row">
+                                  data.map((d) => (
+                                    <tr id="table-row" key={Math.random() * (10-1) + 1}>
                                         <td id="table-data" key={Math.random() * (10-1) + 1}>
                                            {d.WrittenPremium}
                                         </td>

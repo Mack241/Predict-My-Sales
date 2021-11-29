@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Bar } from 'recharts'
+import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts'
 import { useEffect } from "react";
 import { getData } from "../actions/chartAction";
-import Loader from "./Loader";
 
 const LeftChart = () => {
 

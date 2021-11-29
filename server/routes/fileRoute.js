@@ -14,15 +14,12 @@ router.post('/', async (req, res) => {
     }
 
     const file = req.files.file
-
     
     file.mv(`${__dirname}/server/public/uploads/${file.name}`, err => {
         if(err){
             console.error(err)
             res.status(500).send(err)
         }
-        
-        res.json({ fileName: file.name, filePath: `/uploads/${file.name}` })
     })
 
     const filePath = __dirname + `/server/public/uploads/${file.name}`
@@ -107,6 +104,8 @@ router.post('/', async (req, res) => {
             console.log("Items inserted succesfully")
         })
     })
+    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` })
+   
 })
 
 export default router

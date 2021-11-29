@@ -13,6 +13,7 @@ export const bulkDataReducer = (state = {}, action) => {
         case USER_FILE_UPLOAD_REQUEST:
             return { loading: true, uploadStat: false }
         case USER_FILE_UPLOAD_SUCCESS:
+            console.log(action.payload)
             return { loading: false, uploadStat: true, file: action.payload }
         case USER_FILE_UPLOAD_FAIL:
             return { loading: false, uploadStat: false, error: action.payload }
