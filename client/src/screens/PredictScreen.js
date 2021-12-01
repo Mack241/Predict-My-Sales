@@ -1,6 +1,31 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
+import { predict } from '../actions/predictActions';
 
 const PredictScreen = () => {
+    const dispatch = useDispatch()
+
+    const bulkData = useSelector((state) => state.bulkData) 
+    const { data } = bulkData
+
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
+
+    const username = userInfo['username']
+
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    const fullDate = month + '/' + day + '/' + year
+
+    useEffect(() => {
+        if(data) {
+            dispatch(predict(fullDate, username))
+        }
+    }, [dispatch, fullDate, username])
 
     return (
         <Container>

@@ -39,59 +39,24 @@ router.post('/', async (req, res) => {
             for(let i = 0; i<source.length; i++){
                 let ProducerNumber = source[i]["ProducerNumber"],
                     PremiumYear = source[i]["PremiumYear"],
-                    PremiumMonth = source[i]["PremiumMonth"],
                     ProductType = source[i]["ProductType"],
-                    ProducerPriorExperienceYears = source[i]["ProducerPriorExperienceYears"],	
-                    ProducerEducation = source[i]["ProducerEducation"]	,
                     ProducerLOSMonths = source[i]["ProducerLOSMonths"]	,
-                    ProducerAgeYears = source[i]["ProducerAgeYears"],	
-                    ProducerRace	 = source[i]["ProducerRace"],
-                    ProducerGender = source[i]["ProducerGender"]	,
-                    ProducerMaritalStatus = source[i]["ProducerMaritalStatus"],	
-                    ProducerRole = source[i]["ProducerRole"]	,
-                    ProducerState	 = source[i]["ProducerState"],
-                    PolicyIssueState = source[i]["PolicyIssueState"],	
-                    PaymentFrequency = source[i]["PaymentFrequency"]	,
-                    PolicyHolderAgeAtIssueYears	 = source[i]["PolicyHolderAgeAtIssueYears"],
-                    PolicyHolderGender = source[i]["PolicyHolderGender"],	
-                    SalesOfficeAtIssue = source[i]["SalesOfficeAtIssue"],
-                    SalesTerritory = source[i]["SalesTerritory"],	
-                    PaymentYear	 = source[i]["PaymentYear"],
-                    PaymentModeAtIssue	 = source[i]["PaymentModeAtIssue"],
                     WrittenPremium	 = source[i]["WrittenPremium"],
                     PolicyAnnualFee	 = source[i]["PolicyAnnualFee"] ,
                     CommissionAmount  = source[i]["CommissionAmount"]	,
-                    PerformanceCredit	 = source[i]["PerformanceCredit"],
-                    CommissionablePremium = source[i]["CommissionablePremium"]
+                    PerformanceCredit	 = source[i]["PerformanceCredit"]
     
-                    let insertStatement = `INSERT INTO Data values(?,?,?,?,?,?,?,?,?,?
-                                                                ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+                    let insertStatement = `INSERT INTO Data(ProducerNumber, PremiumYear, ProductType, ProducerLOSMonths,
+                                            WrittenPremium, PolicyAnnualFee, CommissionAmount, PerformanceCredit) 
+                                            values(?,?,?,?,?,?,?,?)`
                     let items = [ProducerNumber,
                         PremiumYear,
-                        PremiumMonth,
                         ProductType ,
-                        ProducerPriorExperienceYears,
-                        ProducerEducation,
                         ProducerLOSMonths,
-                        ProducerAgeYears,
-                        ProducerRace,
-                        ProducerGender,
-                        ProducerMaritalStatus,
-                        ProducerRole,
-                        ProducerState,
-                        PolicyIssueState,
-                        PaymentFrequency,
-                        PolicyHolderAgeAtIssueYears,
-                        PolicyHolderGender,
-                        SalesOfficeAtIssue,
-                        SalesTerritory,
-                        PaymentYear,
-                        PaymentModeAtIssue,
                         WrittenPremium,
                         PolicyAnnualFee,
                         CommissionAmount,
-                        PerformanceCredit,
-                        CommissionablePremium]
+                        PerformanceCredit]
     
                         con.query(insertStatement, items, (err, res, fields) => {
                             if(err){
@@ -99,8 +64,8 @@ router.post('/', async (req, res) => {
                                 return console.log(err)
                             }
                         })
-    
-            }
+                        
+                    }
             console.log("Items inserted succesfully")
         })
     })

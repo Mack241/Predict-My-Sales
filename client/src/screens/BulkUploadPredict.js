@@ -2,8 +2,7 @@ import styled  from "styled-components";
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { deleteData, fetchData, upload } from "../actions/bulkUploadActions";
-import Loader from "../components/Loader";
+import { deleteData, fetchData, fetchDate, upload, uploadLatestDate } from "../actions/bulkUploadActions";
 import { useEffect } from "react";
 
 
@@ -14,8 +13,16 @@ const BulkUploadPredict = () => {
 
     const dispatch = useDispatch()
 
-    const bulkData = useSelector( (state) =>  state.bulkData)
+    const bulkData = useSelector( (state) => state.bulkData)
     const { loading, data, prediction, uploadStat } = bulkData
+
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
+
+    const uploadDateReducer = useSelector((state) => state.uploadDate)
+    const { uploadDate, date } = uploadDateReducer
+
+    const username = userInfo['username']
 
     const onChange = e => {
         setFile(e.target.files[0])
@@ -24,20 +31,31 @@ const BulkUploadPredict = () => {
 
     const onSubmit =  e => {
         e.preventDefault();
+
+        const d = new Date()
+        const day = d.getDay()
+        const month = d.getMonth()
+        const year = d.getFullYear()
+
+        const currDate = month + '/' + day + '/' + year
+
         dispatch(upload(file, setUploadedFile))
-    }
-    if(uploadStat === true){
         dispatch(fetchData())
-   }
+        dispatch(uploadLatestDate(username, currDate))
+        dispatch(fetchDate(username))
+    }
 
     const deleteHandler = () => {
         dispatch(deleteData())
         setFileName('Browse')  
     }
 
-    useEffect(() => {
+    useEffect( () => {
         dispatch(fetchData())
-    },[dispatch])
+        if(data) {
+            dispatch(fetchDate(username))
+        }
+    },[dispatch, username])
 
     return (
         <Container>
@@ -58,7 +76,11 @@ const BulkUploadPredict = () => {
                   { data && data.length !== 0  ? 
                     <span style={{color: '#14f736', marginLeft: '10px'}}>Successful</span> :
                     <span style={{color: '#0a66c2', marginLeft: '10px'}}>NA</span> }</span>
-              <span id="title">Upload Date: <span style={{color: 'gray', marginLeft: '10px'}}>mm/dd/yyyy</span></span>
+                  { data && data.length !== 0 && uploadDate ?
+                    <span id="title">Upload Date: <span style={{color: 'gray', marginLeft: '10px'}}>{date}</span></span>
+                   :
+                   <span id="title">Upload Date: <span style={{color: 'gray', marginLeft: '10px'}}>NA</span></span>
+                }
               {
                   prediction 
               }
@@ -75,45 +97,47 @@ const BulkUploadPredict = () => {
                 </Buttons> :
                  <div></div> 
                  }
-                {loading ? 
-                 <Loader /> :
-                 <div id="table-div">
-                   <table id="table">
-                       <thead>
-                         {data && data.length !== 0 ? 
-                            <tr>
-                                <td id="table-head">WrittenPremium</td>
-                                <td id="table-head">PolicyAnnualFee</td>
-                                <td id="table-head">CommissionAmount</td>
-                                <td id="table-head">PerformanceCredit</td> 
-                            </tr>  
-                           :
-                           <tr></tr> 
-                          }
-                       </thead>
-                       <tbody>
-                            { data && data.length === 0 && uploadStat === false ?
-                             <div id="no-data">No Data</div> :
-                                  data.map((d) => (
-                                    <tr id="table-row" key={Math.random() * (10-1) + 1}>
-                                        <td id="table-data" key={Math.random() * (10-1) + 1}>
-                                           {d.WrittenPremium}
-                                        </td>
-                                        <td id="table-data" key={Math.random() * (10-1) + 1}>
-                                           {d.PolicyAnnualFee}
-                                        </td>
-                                        <td id="table-data" key={Math.random() * (10-1) + 1}>
-                                           {d.CommissionAmount}
-                                        </td>
-                                        <td id="table-data" key={Math.random() * (10-1) + 1}>
-                                           {d.PerformanceCredit}
-                                        </td>
-                                    </tr>
-                              ))
-                            }
-                       </tbody>
-                   </table>
-                </div>
+                {data  ? 
+                <div id="table-div">
+                <table id="table">
+                    <thead>
+                      {data && data.length !== 0 ? 
+                         <tr>
+                             <td id="table-head">WrittenPremium</td>
+                             <td id="table-head">PolicyAnnualFee</td>
+                             <td id="table-head">CommissionAmount</td>
+                             <td id="table-head">PerformanceCredit</td> 
+                         </tr>  
+                        :
+                        <tr></tr> 
+                       }
+                    </thead>
+                    <tbody>
+                         { data && !uploadStat
+                          ?
+                          <div id="no-data">No Data</div> :
+                               data.map((d) => (
+                                 <tr id="table-row" key={Math.random() * (10-1) + 1}>
+                                     <td id="table-data" key={Math.random() * (10-1) + 1}>
+                                        {d.WrittenPremium}
+                                     </td>
+                                     <td id="table-data" key={Math.random() * (10-1) + 1}>
+                                        {d.PolicyAnnualFee}
+                                     </td>
+                                     <td id="table-data" key={Math.random() * (10-1) + 1}>
+                                        {d.CommissionAmount}
+                                     </td>
+                                     <td id="table-data" key={Math.random() * (10-1) + 1}>
+                                        {d.PerformanceCredit}
+                                     </td>
+                                 </tr>
+                           ))
+                         }
+                    </tbody>
+                </table>
+             </div> 
+                   :
+                 <div>No Data</div>
                 }
             </Table>
         </Container>

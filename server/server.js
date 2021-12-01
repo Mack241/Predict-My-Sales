@@ -17,8 +17,12 @@ app.use(express.json())
 app.use(fileUpload())
 
 
+app.get('/', (req, res) => {
+    res.send("working")
+})
+
 app.use('/file', fileRoute)
-app.use('/login', userRoute)
+app.use('/user', userRoute)
 app.use('/fetch', dataRoute)
 app.use('/charts/fetch', chartRoute)
 

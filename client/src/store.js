@@ -4,11 +4,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { userLoginReducer } from './reducers/userReducer'
 import { getChartDataReducer } from './reducers/chartReducer'
 import { bulkDataReducer } from './reducers/bulkDataReducer'
+import { uploadDateReducer } from './reducers/uploadDateReducer'
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     chartData: getChartDataReducer,
-    bulkData: bulkDataReducer
+    bulkData: bulkDataReducer,
+    uploadDate: uploadDateReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') 
