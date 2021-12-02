@@ -5,12 +5,14 @@ import { userLoginReducer } from './reducers/userReducer'
 import { getChartDataReducer } from './reducers/chartReducer'
 import { bulkDataReducer } from './reducers/bulkDataReducer'
 import { uploadDateReducer } from './reducers/uploadDateReducer'
+import { singleAgentReducer } from './reducers/singleAgentReducer'
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     chartData: getChartDataReducer,
     bulkData: bulkDataReducer,
-    uploadDate: uploadDateReducer
+    uploadDate: uploadDateReducer,
+    singleAgent: singleAgentReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') 
