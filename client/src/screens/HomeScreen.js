@@ -34,7 +34,9 @@ const HomeScreen = () => {
                 <Link to='/bulkuploadpredict' style={{ textDecoration: 'none' }}>
                    <LeftAction />
                 </Link>
+                <Link to='/single_agent_predict' style={{ textDecoration: 'none' }}>
                  <MainAction />
+                </Link>
               </Actions>
           <Section>
               <p>Data Analysis</p>

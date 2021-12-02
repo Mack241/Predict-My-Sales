@@ -6,6 +6,8 @@ import BulkUploadPredict from './screens/BulkUploadPredict';
 import Login from './screens/Login';
 import  GeneralAnalysisScreen  from './screens/GeneralAnalysisScreen';
 import PredictScreen from './screens/PredictScreen';
+import SinglePredictScreen from './screens/SinglePredictScreen';
+
 
 function App() {
   return (
@@ -16,6 +18,10 @@ function App() {
           <Route path="/bulkuploadpredict">
             <Header />
             <BulkUploadPredict />
+          </Route>
+          <Route path="/single_agent_predict">
+            <Header />
+            <SinglePredictScreen />
           </Route>
           <Route path="/general_analysis">
             <Header />
