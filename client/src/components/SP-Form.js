@@ -8,7 +8,7 @@ const Form = () => {
    const [product, setProduct] = useState('')
    const [role, setRole] = useState('')
    const [year, setYear] = useState('')
-   const [payeeLOS, setPayeeLOS] = useState()
+   const [payeeLOS, setPayeeLOS] = useState(0)
 
    const dispatch = useDispatch()
 

@@ -18,7 +18,7 @@ export const predict = (data) => async (dispatch) => {
             },
         }
 
-        const response = await axios.post('http://6ea358e5-c069-4216-a833-263b98444bde.eastus2.azurecontainer.io/score', data, config)
+        const response = await axios.post('http://predictmysalesapi.azure-api.net/pms-api-test/', data)
 
         dispatch({
             type: AGENT_PREDICT_SUCCESS,
