@@ -21,7 +21,7 @@ const SingleAgentTable = () => {
                             <span id="cations">Year: {predictData.Year}</span>    
                             <span id="cations">PayeeLOS: {predictData.PayeeLOS}</span>   
 
-                            <div style={{ marginTop: '30px', fontWeight: '600' }}>Predicted Sales: {predictData.PredictedSales}</div>
+                            <div style={{ marginTop: '30px', fontWeight: '600' }}>Predicted Sales: $ {predictData[ 'Predicted Sales' ]}</div>
                         </div>
                         :
                         <div>No Data</div>
