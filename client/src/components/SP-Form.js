@@ -15,19 +15,32 @@ const Form = () => {
    const onSubmit = (e) => {
        e.preventDefault()
        const data = {
-           "Inputs": {
-               "WebServiceInput0": [
-                   {
-                       "Quarter": quarter,
-                       "ProductCategory": product,
-                       "AgentRole": role,
-                       "Year": year,
-                       "PayeeLOS": payeeLOS
-                   },
-               ],
-           },
-           "GlobalParameters": {
-           }
+        "Inputs": {
+            "WebServiceInput0": [
+              {
+                "Quarter": "Q03",
+                "ProductCategory": "FLEXIBLE PREMIUM ANNUITY",
+                "AgentRole": "AGT",
+                "Year": 2021,
+                "PayeeLOS": 4
+              },
+              {
+                "Quarter": "Q03",
+                "ProductCategory": "UNIVERSAL LIFE",
+                "AgentRole": "UFT",
+                "Year": 2021,
+                "PayeeLOS": 9
+              },
+              {
+                "Quarter": "Q03",
+                "ProductCategory": "OTHER LIFE",
+                "AgentRole": "AGT",
+                "Year": 2021,
+                "PayeeLOS": 29
+              }
+            ]
+          },
+          "GlobalParameters": {}
        }
        dispatch(predict(data))
    }

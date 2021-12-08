@@ -10,20 +10,28 @@ export const predict = (data) => async (dispatch) => {
             type: AGENT_PREDICT_REQUEST
         })
 
-        const config = {
-            headers: {
-                'Access-Control-Allow-Origin': "*",
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer K7ALSuAw3VqawWqt7cXJKDW9XRgRy3Pe',
-                'Ocp-Apim-Subscription-Key': 'ce1c8903141c4d80b15eed57a28ae7da'
+        var config = {
+            method: 'post',
+            url: 'http://predictmysalesapi.azure-api.net/pms-api-test/score',
+            headers: { 
+              'Ocp-Apim-Subscription-Key': 'ce1c8903141c4d80b15eed57a28ae7da', 
+              'Authorization': 'Bearer K7ALSuAw3VqawWqt7cXJKDW9XRgRy3Pe', 
+              'Content-Type': 'application/json'
             },
-        }
+            data : data
+          };
 
-        const response = await axios.post('http://predictmysalesapi.azure-api.net/pms-api-test/score', config, data)
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
 
         dispatch({
             type: AGENT_PREDICT_SUCCESS,
-            payload: response
+            // payload: response
         })
 
     } catch(error) {
