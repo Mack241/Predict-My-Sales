@@ -113,7 +113,7 @@ const BulkUploadPredict = () => {
                        }
                     </thead>
                     <tbody>
-                         { data && !uploadStat
+                         { data && uploadStat
                           ?
                           <div id="no-data">No Data</div> :
                                data.map((d) => (

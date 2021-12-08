@@ -1,10 +1,31 @@
 import styled from "styled-components";
+import { useSelector } from 'react-redux'
 
 const SingleAgentTable = () => {
+
+    const singleAgentData = useSelector((state) => state.singleAgent)
+    const { azureLoad,  predictData } = singleAgentData
+
+    if(predictData) {
+        console.log(predictData.Quarter)
+    }
+
     return (
         <Container>
             <CardBody>
-                    
+                    { !azureLoad && predictData ? 
+                        <div id="display">
+                            <span id="cations">Quarter: {predictData.Quarter}</span>
+                            <span id="cations">Product: {predictData.ProductCategory}</span>    
+                            <span id="cations">Agent Role: {predictData.AgentRole}</span>    
+                            <span id="cations">Year: {predictData.Year}</span>    
+                            <span id="cations">PayeeLOS: {predictData.PayeeLOS}</span>   
+
+                            <div style={{ marginTop: '30px', fontWeight: '600' }}>Predicted Sales: {predictData.PredictedSales}</div>
+                        </div>
+                        :
+                        <div>No Data</div>
+                }
             </CardBody>
         </Container>
     )
@@ -39,6 +60,16 @@ const CardBody = styled.div`
         display: flex;
         flex-direction: row;
         padding: 10px;
+    }
+
+    #display {
+        display: flex;
+        flex-direction: column;
+        line-height: 30px;
+    }
+
+    #captions{
+        font-weight: 600;
     }
 `;
 

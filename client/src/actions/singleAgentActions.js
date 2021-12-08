@@ -12,27 +12,29 @@ export const predict = (data) => async (dispatch) => {
 
         var config = {
             method: 'post',
-            url: 'http://predictmysalesapi.azure-api.net/pms-api-test/score',
+            url: 'https://predictmysalesapi.azure-api.net/pms-api-test/score',
             headers: { 
               'Ocp-Apim-Subscription-Key': 'ce1c8903141c4d80b15eed57a28ae7da', 
               'Authorization': 'Bearer K7ALSuAw3VqawWqt7cXJKDW9XRgRy3Pe', 
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': 'https://predictmysalesapi.azure-api.net'
             },
             data : data
           };
 
           axios(config)
           .then(function (response) {
-            console.log(JSON.stringify(response.data));
+            //   console.log(response.data)
+            let result = response.data.Results.WebServiceOutput0[0]
+            dispatch({
+                type: AGENT_PREDICT_SUCCESS,
+                payload: result
+            })
+            
           })
           .catch(function (error) {
             console.log(error);
           });
-
-        dispatch({
-            type: AGENT_PREDICT_SUCCESS,
-            // payload: response
-        })
 
     } catch(error) {
 
